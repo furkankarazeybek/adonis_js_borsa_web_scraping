@@ -158,6 +158,78 @@ class BorsaController {
          }
 
     }
+
+    async PolatliTicBorsa () {
+        try{
+            let resp = await axios ({
+             url: "https://www.polatliborsa.org.tr/satis-salonu-bulteni/",
+             method: "GET",
+
+            });
+     
+            if(resp.status == 200) {
+             let $ = cheerio.load(resp.data);
+
+
+            let currencies = [];
+            for (let k=1; k<9 ; k++){
+
+               let r1 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(1) > b`).text();
+
+               let r2 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(2)`).text();
+
+               let r3 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(3)`).text();
+
+               let r4 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(4)`).text();
+
+               let r5 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(5)`).text();
+
+               let r6 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(6)`).text();
+
+               let r7 = $(`.table_green > tbody > tr:nth-child(${k}) > td:nth-child(7)`).text();
+
+             
+
+
+
+                let item = {
+                   urun_adi : r1,
+                   min_fiyat : r2,
+                   max_fiyat : r3,
+                   ortalama_fiyat : r4,
+                   miktar : r5,
+                   islem_tutari : r6,
+                   islem_adedi: r7,
+                 
+ 
+
+                   
+
+                   
+
+                 
+              
+                }; 
+                console.log(item);
+                currencies.push(item);
+              
+            }
+
+             
+    
+             return (currencies); 
+            /* fs.writeFileSync("resp.json",JSON.stringify(currencies,null,4),"UTF-8"); */
+     
+            }
+            else {
+             console.warn("RESP DOESNT SUCCESFUL",resp.status, resp.statusText);
+            }
+         }
+         catch{
+          return "error";
+         }
+
+    }
 }
 
 module.exports = BorsaController;

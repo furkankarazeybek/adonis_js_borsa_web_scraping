@@ -28,5 +28,6 @@ Route.get("/hello/:name",function( {params }) {
 
 
 
-Route.get("/bandirma","BorsaController.BanTicBorsa");
+Route.get("/","BorsaController.BanTicBorsa");
 Route.get("/edirne","BorsaController.EdirneTicBorsa");
+Route.get("/polatli","BorsaController.PolatliTicBorsa");
