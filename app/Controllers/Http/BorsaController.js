@@ -81,6 +81,83 @@ class BorsaController {
          }
 
     }
+
+    async EdirneTicBorsa () {
+        try{
+            let resp = await axios ({
+             url: "https://www.online.etb.org.tr/son-islemler.html",
+             method: "GET",
+
+            });
+     
+            if(resp.status == 200) {
+             let $ = cheerio.load(resp.data);
+
+
+            let currencies = [];
+            for (let k=1; k<65 ; k++){
+
+               let r1 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.product_name`).text();
+
+               let r2 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_datetime`).text();
+
+               let r3 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_volume`).text();
+
+               let r4 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_piece`).text();
+
+               let r5 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_quantity`).text();
+
+               let r6 =  $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_average`).text();
+
+               let r7 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_highest`).text();
+
+               let r8 = $(`body > div.main_category_today > a:nth-child(${k}) > div > div.list_lowest`).text();
+
+
+              
+                    
+              
+
+           
+
+                let item = {
+                   urun_adi : r1,
+                   tarih : r2,
+                   islem_hacmi: r3,
+                   islem_adedi: r4,
+                   islem_miktari: r5,
+                   ortalama : r6,
+                   en_yuksek: r7,
+                   en_dusuk : r8
+
+
+                   
+
+                   
+
+                 
+              
+                }; 
+                console.log(item);
+                currencies.push(item);
+              
+            }
+
+             
+    
+             return (currencies); 
+            /* fs.writeFileSync("resp.json",JSON.stringify(currencies,null,4),"UTF-8"); */
+     
+            }
+            else {
+             console.warn("RESP DOESNT SUCCESFUL",resp.status, resp.statusText);
+            }
+         }
+         catch{
+          return "error";
+         }
+
+    }
 }
 
 module.exports = BorsaController;

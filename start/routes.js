@@ -1,5 +1,7 @@
 'use strict'
 
+const BorsaController = require('../app/Controllers/Http/BorsaController');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -26,4 +28,5 @@ Route.get("/hello/:name",function( {params }) {
 
 
 
-Route.get("/","BorsaController.BanTicBorsa");
+Route.get("/bandirma","BorsaController.BanTicBorsa");
+Route.get("/edirne","BorsaController.EdirneTicBorsa");
