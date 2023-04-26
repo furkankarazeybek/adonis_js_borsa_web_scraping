@@ -30,7 +30,8 @@
     "cheerio": "^1.0.0-rc.12",
     "fs": "^0.0.1-security",
     "inner-text": "^1.0.2",
-    "innertext": "^1.0.3"
+    "innertext": "^1.0.3",
+    "typescript": "^5.0.4"
   },
   "autoload": {
     "App": "./app"
